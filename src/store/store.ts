@@ -1,7 +1,7 @@
 import featureSetsSlice from "./slices/featureSetsSlice";
 import componentTypesSlice from "./slices/componentTypesSlice";
 import featureTypes from "./slices/featuresTypesSlice";
-import vendors from "./slices/vendorsSlice";
+import vendorsSlice from "./slices/vendorsSlice";
 import auth from "./slices/authSlice";
 import getUsersSlice from "./slices/usersSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -9,7 +9,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 const rootReducer = combineReducers({
   getUsersSlice,
   auth,
-  vendors,
+  vendors: vendorsSlice,
   featureTypes,
   componentTypesSlice,
   featureSetsSlice,

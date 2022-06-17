@@ -70,7 +70,6 @@ export const OperationModal = (props: Props) => {
     handleSubmit,
     reset,
     setValue,
-    getValues,
     register,
     formState: { errors },
   } = useForm<IVendor>({

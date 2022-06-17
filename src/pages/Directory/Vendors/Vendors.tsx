@@ -10,17 +10,16 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { selectVendorData } from "../../../store/selectors";
 import {
   editVendorApi,
-  fetchVendorsApi,
-  getCountVendors,
+  fetchVendors,
   insertVendorApi,
   removeVendorApi,
-} from "../../../store/thunks/fetchVendorsApi";
+} from "../../../store/thunks/vendorsThunk";
 import { IVendor } from "../../../store/types/IVendor";
 import { GridColDef } from "@mui/x-data-grid";
 import { ActionButtonDirectory } from "../Shared/ActionButtonDirectory";
 import { typeModal, OperationModal } from "./Components/OperationModal";
 
-import { vendors as venAction } from "../../../store/slices/vendorsSlice";
+import { vendorsSlice as venAction } from "../../../store/slices/vendorsSlice";
 import { SnackDirectory } from "../Shared/SnackDirectory";
 
 interface Props {}
@@ -55,13 +54,8 @@ export const Vendors = (props: Props) => {
   const { isLoading, vendors, count, error } = useAppSelector(selectVendorData);
 
   React.useEffect(() => {
-    dispatch(fetchVendorsApi());
-    dispatch(getCountVendors());
+    dispatch(fetchVendors());
   }, []);
-
-  React.useEffect(() => {
-    dispatch(fetchVendorsApi(page + 1));
-  }, [page]);
 
   React.useEffect(() => {
     if (error.length !== 0) {
@@ -106,22 +100,16 @@ export const Vendors = (props: Props) => {
   };
 
   const handleInsertVendor = (data: IVendor) => {
-    dispatch(insertVendorApi(data, page + 1));
+    dispatch(insertVendorApi(data));
   };
 
   const handleEditVendor = (data: IVendor) => {
-    dispatch(editVendorApi(data, page + 1));
+    dispatch(editVendorApi(data));
   };
 
   const handleRemoveVendor = (data: IVendor[]) => {
-    dispatch(removeVendorApi(data, page + 1));
+    dispatch(removeVendorApi(data));
   };
-
-  // const { data } = useDemoData({
-  //   dataSet: "Commodity",
-  //   rowLength: 10,
-  //   maxColumns: 6,
-  // });
 
   const handleSnackClose = (
     event: React.SyntheticEvent | Event,

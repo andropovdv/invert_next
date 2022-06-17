@@ -15,18 +15,18 @@ const initialState: vendorStore = {
   count: 0,
 };
 
-export const vendors = createSlice({
+export const vendorsSlice = createSlice({
   name: "vendors",
   initialState,
   reducers: {
     getVendorStart(state) {
       state.isLoading = true;
     },
-    getVendorSuccess(state, action: PayloadAction<IVendor[]>) {
+    setVendorSuccess(state, action: PayloadAction<IVendor[]>) {
       state.isLoading = false;
       state.vendors = action.payload;
     },
-    setVendorCount(state, action) {
+    setVendorCount(state, action: PayloadAction<number>) {
       state.count = action.payload;
     },
     setVendorError(state, action: PayloadAction<string>) {
@@ -36,4 +36,11 @@ export const vendors = createSlice({
   },
 });
 
-export default vendors.reducer;
+export const {
+  getVendorStart,
+  setVendorSuccess,
+  setVendorCount,
+  setVendorError,
+} = vendorsSlice.actions;
+
+export default vendorsSlice.reducer;

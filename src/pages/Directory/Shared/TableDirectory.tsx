@@ -36,10 +36,11 @@ export const TableDirectory = (props: Props) => {
           <DataGrid
             pagination
             pageSize={10}
+            rowsPerPageOptions={[10]}
             page={page}
             onPageChange={(p) => setPage(p)}
             rowCount={rowCount}
-            paginationMode="server"
+            // paginationMode="server"
             density="compact"
             loading={isLoading}
             autoHeight
@@ -54,6 +55,11 @@ export const TableDirectory = (props: Props) => {
             disableColumnMenu={true}
             onRowClick={(rowData) => setInfoRow(rowData.row)} //TODO подумать о реализации
             disableSelectionOnClick
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "name", sort: "asc" }],
+              },
+            }}
           />
         </div>
       </Paper>
