@@ -21,7 +21,7 @@ import {
   selectComponentTypesData,
   selectFeatureTypesData,
 } from "../../../../store/selectors";
-import { fetchComponentTypes } from "../../../../store/thunks/fetchComponenTypes";
+import { fetchComponentTypes } from "../../../../store/thunks/componenTypesThunk";
 import { fetchFeaturesTypesApi } from "../../../../store/thunks/fetchFeatureTypes";
 import { IComponentType } from "../../../../store/types/IComponentTypes";
 import { IFeature, IFeatureSets } from "../../../../store/types/IFeatureSets";

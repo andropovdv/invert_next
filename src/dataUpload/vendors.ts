@@ -90,3 +90,22 @@ export const vendorsData = [
     url: "http://www.honhai.com/en-us/",
   },
 ];
+
+export const componentTypesData = [
+  {
+    id: 1,
+    name: "Процессор",
+  },
+  {
+    id: 2,
+    name: "Оперативная память",
+  },
+  {
+    id: 3,
+    name: "Жесткий диск",
+  },
+  {
+    id: 4,
+    name: "Материнская плата",
+  },
+];

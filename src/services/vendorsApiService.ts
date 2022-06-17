@@ -19,13 +19,6 @@ interface UpData {
   [key: string]: IVendor;
 }
 
-const mockData: IVendor = {
-  id: "1",
-  name: "ASRock",
-  full_name: "ASRock",
-  url: "http://www.asrock.com",
-};
-
 export const vendorApi = {
   fillVendors: async () => {
     let updates = {} as UpData;

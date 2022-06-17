@@ -86,8 +86,7 @@ export const editVendorApi =
   };
 
 export const removeVendorApi =
-  (data: IVendor[], page?: number, limit: number = 10) =>
-  async (dispatch: AppDispatch) => {
+  (data: IVendor[]) => async (dispatch: AppDispatch) => {
     try {
       dispatch(getVendorStart());
       const query = data.map((el: IVendor) => vendorApi.removeVendor(el.id));

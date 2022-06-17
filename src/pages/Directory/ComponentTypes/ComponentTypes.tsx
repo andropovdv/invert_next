@@ -2,24 +2,25 @@
 import { Grid } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { selectComponentTypesData } from "../../../store/selectors";
-import { componentTypesSlice } from "../../../store/slices/componentTypesSlice";
-import {
-  fetchComponentTypes,
-  getCountComponentTypes,
-  insertComponentTypes,
-  editComponentTypes,
-  removeComponentTypes,
-} from "../../../store/thunks/fetchComponenTypes";
-import { IComponentType } from "../../../store/types/IComponentTypes";
-import { ActionButtonDirectory } from "../Shared/ActionButtonDirectory";
-import { InfoBlockDirectory } from "../Shared/InfoBlockDirectory";
-import { SnackDirectory } from "../Shared/SnackDirectory";
-import { TableDirectory } from "../Shared/TableDirectory";
-import { TitleDirectory } from "../Shared/TitleDirectory";
+
 import { ComponentTypesModal } from "./Components/ComponentTypesModal";
 import { typeModal } from "../Vendors/Components/OperationModal";
+import { useAppDispatch, useAppSelector } from "hooks/store";
+import { SnackDirectory } from "../Shared/SnackDirectory";
+import { TitleDirectory } from "../Shared/TitleDirectory";
+import { ActionButtonDirectory } from "../Shared/ActionButtonDirectory";
+import { TableDirectory } from "../Shared/TableDirectory";
+import { InfoBlockDirectory } from "../Shared/InfoBlockDirectory";
+import {
+  editComponentTypes,
+  fetchComponentTypes,
+  insertComponentTypes,
+  removeComponentTypes,
+} from "store/thunks/componenTypesThunk";
+import { setComponentTypesError } from "store/slices/componentTypesSlice";
+import { IComponentType } from "store/types/IComponentTypes";
+import { selectComponentTypesData } from "store/selectors";
+import { componentTypesApi } from "services/componentTypesApiService";
 
 interface Props {}
 
@@ -55,11 +56,13 @@ export const ComponentTypes = (props: Props) => {
   // Table ==========
   React.useEffect(() => {
     dispatch(fetchComponentTypes());
-    dispatch(getCountComponentTypes());
   }, []);
-  React.useEffect(() => {
-    dispatch(fetchComponentTypes(page + 1));
-  }, [page]);
+
+  // React.useEffect(() => {
+  //   if (componentTypes.length === 0) {
+  //     componentTypesApi.fillContent();
+  //   }
+  // }, [componentTypes]);
   const columnsApi: GridColDef[] = [
     { field: "name", headerName: "Тип характеристики", flex: 1 },
   ];
@@ -81,7 +84,7 @@ export const ComponentTypes = (props: Props) => {
     if (reason === "clickaway") {
       return;
     }
-    dispatch(componentTypesSlice.actions.setComponentTypesError(""));
+    dispatch(setComponentTypesError(""));
     setSnack(false);
   };
   // ================
@@ -119,13 +122,13 @@ export const ComponentTypes = (props: Props) => {
     setVisibly({ isOpen: false, mode: typeModal.add }),
   ];
   const handleInsertComponentTypes = (data: IComponentType) => {
-    dispatch(insertComponentTypes(data, page + 1));
+    dispatch(insertComponentTypes(data));
   };
   const handleEditComponentTypes = (data: IComponentType) => {
-    dispatch(editComponentTypes(data, page + 1));
+    dispatch(editComponentTypes(data));
   };
   const handleRemoveComponentTypes = (data: IComponentType[]) => {
-    dispatch(removeComponentTypes(data, page + 1));
+    dispatch(removeComponentTypes(data));
   };
   // ====================
   return (

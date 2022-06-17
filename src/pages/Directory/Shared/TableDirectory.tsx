@@ -5,7 +5,6 @@ import {
   GridRowsProp,
   GridSelectionModel,
 } from "@mui/x-data-grid";
-import React from "react";
 
 interface Props {
   isLoading: boolean;
@@ -29,10 +28,11 @@ export const TableDirectory = (props: Props) => {
     isLoading,
     setInfoRow,
   } = props;
+
   return (
     <>
       <Paper elevation={7} sx={{ padding: "8px" }}>
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%", height: "470px" }}>
           <DataGrid
             pagination
             pageSize={10}

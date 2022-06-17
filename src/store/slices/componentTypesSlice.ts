@@ -22,7 +22,7 @@ export const componentTypesSlice = createSlice({
     getComponentTypesStart(state) {
       state.isLoading = true;
     },
-    getComponentTypesSuccess(state, action: PayloadAction<IComponentType[]>) {
+    setComponentTypesSuccess(state, action: PayloadAction<IComponentType[]>) {
       state.isLoading = false;
       state.componentTypes = action.payload;
     },
@@ -36,5 +36,12 @@ export const componentTypesSlice = createSlice({
     },
   },
 });
+
+export const {
+  getComponentTypesStart,
+  setComponentTypesCount,
+  setComponentTypesError,
+  setComponentTypesSuccess,
+} = componentTypesSlice.actions;
 
 export default componentTypesSlice.reducer;
