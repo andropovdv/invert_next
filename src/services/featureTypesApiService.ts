@@ -1,4 +1,3 @@
-import "../firebase";
 import {
   child,
   get,
@@ -7,31 +6,29 @@ import {
   remove,
   update,
 } from "firebase/database";
+import "../firebase";
 import { v4 } from "uuid";
-import { IVendor } from "store/types/IVendor";
-import { vendorsData } from "dataUpload/vendors";
+import { IFeatureTypes } from "store/types/IFeatureTypes";
+import { featureTypesData } from "dataUpload/vendors";
 
 const db = getDatabase();
-const refDB = ref(db, "vendors/");
+const refDB = ref(db, "types_feature");
 
 interface UpData {
-  [key: string]: IVendor;
+  [key: string]: IFeatureTypes;
 }
 
-export const vendorApi = {
-  fillVendors: async () => {
+export const featureTypesApi = {
+  fillFeatureSets: async () => {
     let updates = {} as UpData;
-    vendorsData.forEach((el) => {
+    featureTypesData.forEach((el) => {
       const uud = v4();
       const data = { ...el, id: uud };
-      // const updates = {} as UpData;
       updates[`/${uud}`] = data;
-      // update(refDB, updates);
     });
-    // console.log("updates: ", updates);
     update(refDB, updates);
   },
-  getVendor: async () => {
+  getFeatureSets: async () => {
     try {
       const res = await get(child(refDB, "/"));
       if (res.exists()) {
@@ -41,7 +38,7 @@ export const vendorApi = {
       console.log(e);
     }
   },
-  addVendor: async (payload: IVendor) => {
+  addFeatureSets: async (payload: IFeatureTypes) => {
     try {
       const uud = v4();
       const data = { ...payload, id: uud };
@@ -52,7 +49,7 @@ export const vendorApi = {
       console.log(e);
     }
   },
-  editVendor: async (payload: IVendor) => {
+  editFeatureSets: async (payload: IFeatureTypes) => {
     try {
       const updates = {} as UpData;
       updates[`/${payload.id}`] = payload;
@@ -61,9 +58,9 @@ export const vendorApi = {
       console.log(e);
     }
   },
-  removeVendor: async (id: string) => {
+  removeFeatureSets: async (id: string) => {
     try {
-      await remove(ref(db, `/vendors/${id}`));
+      await remove(ref(db, `/types_feature/${id}`));
     } catch (e) {
       console.log(e);
     }

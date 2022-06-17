@@ -109,3 +109,42 @@ export const componentTypesData = [
     name: "Материнская плата",
   },
 ];
+
+export const featureTypesData = [
+  {
+    id: 1,
+    feature: "Speed",
+    field_type: "DROPDOWN",
+    unit: "",
+  },
+  {
+    id: 2,
+    feature: "Частота",
+    field_type: "STRING",
+    unit: "GHz",
+  },
+  {
+    id: 3,
+    feature: "Socket",
+    field_type: "DROPDOWN",
+    unit: "",
+  },
+  {
+    id: 4,
+    feature: "Volume",
+    field_type: "STRING",
+    unit: "Gb",
+  },
+  {
+    unit: "ascvsa",
+    field_type: "DROPDOWN",
+    feature: "reqw",
+    id: 5,
+  },
+  {
+    feature: "test",
+    field_type: "STRING",
+    unit: "qqq",
+    id: 6,
+  },
+];

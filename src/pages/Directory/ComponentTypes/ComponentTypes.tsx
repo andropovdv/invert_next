@@ -20,7 +20,6 @@ import {
 import { setComponentTypesError } from "store/slices/componentTypesSlice";
 import { IComponentType } from "store/types/IComponentTypes";
 import { selectComponentTypesData } from "store/selectors";
-import { componentTypesApi } from "services/componentTypesApiService";
 
 interface Props {}
 
@@ -149,6 +148,7 @@ export const ComponentTypes = (props: Props) => {
       <Grid container spacing={1}>
         <Grid item md={8}>
           <TableDirectory
+            sortField="name"
             rows={componentTypes}
             columns={columnsApi}
             page={page}

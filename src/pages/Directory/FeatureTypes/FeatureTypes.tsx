@@ -1,18 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
+import { useAppDispatch, useAppSelector } from "hooks/store";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { selectFeatureTypesData } from "../../../store/selectors";
-import { featureTypes as featureAct } from "../../../store/slices/featuresTypesSlice";
+import { selectFeatureTypesData } from "store/selectors";
+import { setFeatureTypesError } from "store/slices/featuresTypesSlice";
 import {
   editFeatureTypes,
-  fetchFeaturesTypesApi,
-  getCountFeatureTypes,
+  fetchFeaturesTypes,
   insertFeatureTypes,
   removeFeatureTypes,
-} from "../../../store/thunks/fetchFeatureTypes";
-import { IFeatureTypes } from "../../../store/types/IFeatureTypes";
+} from "store/thunks/featureTypesThunk";
+import { IFeatureTypes } from "store/types/IFeatureTypes";
 import { ActionButtonDirectory } from "../Shared/ActionButtonDirectory";
 import { InfoBlockDirectory } from "../Shared/InfoBlockDirectory";
 import { SnackDirectory } from "../Shared/SnackDirectory";
@@ -57,6 +56,7 @@ export const FeatureTypes = (props: Props) => {
       setSnack(true);
     }
   }, [error]);
+
   const handleSnackClose = (
     event: React.SyntheticEvent | Event,
     reason?: string
@@ -64,23 +64,39 @@ export const FeatureTypes = (props: Props) => {
     if (reason === "clickaway") {
       return;
     }
-    dispatch(featureAct.actions.setFeatureTypesError(""));
+    dispatch(setFeatureTypesError(""));
     setSnack(false);
   };
   // ==============================
   // Table ========================
   React.useEffect(() => {
-    dispatch(fetchFeaturesTypesApi());
-    dispatch(getCountFeatureTypes());
+    dispatch(fetchFeaturesTypes());
   }, []);
-  React.useEffect(() => {
-    dispatch(fetchFeaturesTypesApi(page + 1));
-  }, [page]);
   const columnsApi: GridColDef[] = [
-    { field: "feature", headerName: "Характеристика", flex: 0.5 },
-    { field: "field_type", headerName: "Тип поля", flex: 0.25 },
-    { field: "unit", headerName: "Единица измерения", flex: 0.25 },
+    {
+      field: "feature",
+      headerName: "Характеристика",
+      flex: 0.5,
+      sortable: false,
+    },
+    {
+      field: "field_type",
+      headerName: "Тип поля",
+      flex: 0.25,
+      sortable: false,
+    },
+    {
+      field: "unit",
+      headerName: "Единица измерения",
+      flex: 0.25,
+      sortable: false,
+    },
   ];
+  // React.useEffect(() => {
+  //   if (featureTypes.length === 0) {
+  //     dispatch(fillFeatureSets());
+  //   }
+  // }, [featureTypes]);
   // ===============================
 
   // InfoBlock======================
@@ -123,13 +139,13 @@ export const FeatureTypes = (props: Props) => {
   // ===============================
   // Action Modal Window============
   const handleInsertFeatureTypes = (data: IFeatureTypes) => {
-    dispatch(insertFeatureTypes(data, page + 1));
+    dispatch(insertFeatureTypes(data));
   };
   const handleEditFeatureTypes = (data: IFeatureTypes) => {
-    dispatch(editFeatureTypes(data, page + 1));
+    dispatch(editFeatureTypes(data));
   };
   const handleRemoveFeatureTypes = (data: IFeatureTypes[]) => {
-    dispatch(removeFeatureTypes(data, page + 1));
+    dispatch(removeFeatureTypes(data));
   };
   // ===============================
 
@@ -151,6 +167,7 @@ export const FeatureTypes = (props: Props) => {
       <Grid container spacing={1}>
         <Grid item md={8}>
           <TableDirectory
+            sortField="feature"
             rows={featureTypes}
             columns={columnsApi}
             page={page}

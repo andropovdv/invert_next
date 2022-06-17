@@ -22,7 +22,7 @@ import {
   selectFeatureTypesData,
 } from "../../../../store/selectors";
 import { fetchComponentTypes } from "../../../../store/thunks/componenTypesThunk";
-import { fetchFeaturesTypesApi } from "../../../../store/thunks/fetchFeatureTypes";
+import { fetchFeaturesTypes } from "../../../../store/thunks/featureTypesThunk";
 import { IComponentType } from "../../../../store/types/IComponentTypes";
 import { IFeature, IFeatureSets } from "../../../../store/types/IFeatureSets";
 import { IFeatureTypes } from "../../../../store/types/IFeatureTypes";
@@ -71,7 +71,7 @@ export const FeatureSetsModal = (props: Props) => {
   // API =====
   React.useEffect(() => {
     dispatch(fetchComponentTypes());
-    dispatch(fetchFeaturesTypesApi());
+    dispatch(fetchFeaturesTypes());
   }, []);
 
   // =========

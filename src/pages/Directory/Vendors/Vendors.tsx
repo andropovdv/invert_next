@@ -64,7 +64,12 @@ export const Vendors = (props: Props) => {
   }, [error]);
 
   const columnsApi: GridColDef[] = [
-    { field: "name", headerName: "Наименование", flex: 1, minWidth: 150 },
+    {
+      field: "name",
+      headerName: "Наименование",
+      flex: 1,
+      minWidth: 150,
+    },
   ];
 
   const isDisabled: boolean = selectedRow.length === 0;
@@ -140,6 +145,7 @@ export const Vendors = (props: Props) => {
       <Grid container spacing={1}>
         <Grid item md={8}>
           <TableDirectory
+            sortField="name"
             rows={vendors}
             rowCount={count}
             columns={columnsApi}

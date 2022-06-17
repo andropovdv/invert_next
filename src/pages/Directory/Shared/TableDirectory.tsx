@@ -15,6 +15,7 @@ interface Props {
   rowCount: number;
   setPage: (page: number) => void;
   setInfoRow: (data: any) => void;
+  sortField: string;
 }
 
 export const TableDirectory = (props: Props) => {
@@ -27,6 +28,7 @@ export const TableDirectory = (props: Props) => {
     setPage,
     isLoading,
     setInfoRow,
+    sortField,
   } = props;
 
   return (
@@ -57,7 +59,7 @@ export const TableDirectory = (props: Props) => {
             disableSelectionOnClick
             initialState={{
               sorting: {
-                sortModel: [{ field: "name", sort: "asc" }],
+                sortModel: [{ field: sortField, sort: "asc" }],
               },
             }}
           />

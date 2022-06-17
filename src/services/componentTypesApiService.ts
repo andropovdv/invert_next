@@ -13,7 +13,6 @@ import { componentTypesData } from "dataUpload/vendors";
 
 const db = getDatabase();
 const refDB = ref(db, "types_component/");
-const newId = v4();
 
 interface UpDate {
   [key: string]: IComponentType;

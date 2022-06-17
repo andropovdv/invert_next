@@ -15,14 +15,14 @@ const initialState: featureTypesState = {
   count: 0,
 };
 
-export const featureTypes = createSlice({
+export const featureTypesSlice = createSlice({
   name: "featureTypes",
   initialState,
   reducers: {
     getFeatureTypesStart(state) {
       state.isLoading = true;
     },
-    getFeatureTypesSuccess(state, action: PayloadAction<IFeatureTypes[]>) {
+    setFeatureTypesSuccess(state, action: PayloadAction<IFeatureTypes[]>) {
       state.isLoading = false;
       state.featureTypes = action.payload;
     },
@@ -30,10 +30,17 @@ export const featureTypes = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    setFeatureTypesCount(state, action) {
+    setFeatureTypesCount(state, action: PayloadAction<number>) {
       state.count = action.payload;
     },
   },
 });
 
-export default featureTypes.reducer;
+export const {
+  getFeatureTypesStart,
+  setFeatureTypesSuccess,
+  setFeatureTypesCount,
+  setFeatureTypesError,
+} = featureTypesSlice.actions;
+
+export default featureTypesSlice.reducer;

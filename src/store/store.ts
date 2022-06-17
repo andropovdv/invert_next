@@ -1,6 +1,6 @@
 import featureSetsSlice from "./slices/featureSetsSlice";
 import componentTypesSlice from "./slices/componentTypesSlice";
-import featureTypes from "./slices/featuresTypesSlice";
+import featureTypesSlice from "./slices/featuresTypesSlice";
 import vendorsSlice from "./slices/vendorsSlice";
 import auth from "./slices/authSlice";
 import getUsersSlice from "./slices/usersSlice";
@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   getUsersSlice,
   auth,
   vendors: vendorsSlice,
-  featureTypes,
+  featureTypes: featureTypesSlice,
   componentTypesSlice,
   featureSetsSlice,
 });
