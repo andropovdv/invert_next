@@ -148,3 +148,60 @@ export const featureTypesData = [
     id: 6,
   },
 ];
+
+export const featureSetsData = [
+  {
+    id: 1,
+    component: {
+      id: "1",
+      name: "MotherBoard",
+    },
+    feature: [
+      {
+        name_feature: {
+          id: "1",
+          name: "Socket",
+        },
+        value_feature: ["Soket 7", "Soket 370", "Soket 1152"],
+        type: "DROPDOWN",
+        unit: "",
+      },
+      {
+        name_feature: {
+          id: "2",
+          name: "Volume",
+        },
+        value_feature: [],
+        type: "STRING",
+        unit: "Gb",
+      },
+    ],
+  },
+  {
+    id: 2,
+    component: {
+      id: "2",
+      name: "Cpu",
+    },
+    feature: [
+      {
+        name_feature: {
+          id: "3",
+          name: "Socket",
+        },
+        value_feature: ["Soket 7", "Soket 1152"],
+        type: "DROPDOWN",
+        unit: "",
+      },
+      {
+        name_feature: {
+          id: "4",
+          name: "Частота",
+        },
+        value_feature: [],
+        type: "STRING",
+        unit: "Gb",
+      },
+    ],
+  },
+];

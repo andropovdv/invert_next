@@ -1,21 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import { Grid } from "@mui/material";
-import { GridColDef } from "@mui/x-data-grid";
+import { useAppDispatch, useAppSelector } from "hooks/store";
 import React from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { selectFeatureSetsData } from "../../../store/selectors";
+import { selectFeatureSetsData } from "store/selectors";
 import {
+  setFeatureSetCurrent,
+  setFeatureSetsError,
+} from "store/slices/featureSetsSlice";
+import {
+  editFeatureSets,
   fetchFeatureSets,
-  getCountFeatureSets,
   insertFeatureSets,
-} from "../../../store/thunks/fetchFeatureSets";
-import { IFeatureSets } from "../../../store/types/IFeatureSets";
-import { ActionButtonDirectory } from "../Shared/ActionButtonDirectory";
-import { TableDirectory } from "../Shared/TableDirectory";
+} from "store/thunks/featureSetsThunk";
+import { IFeatureSets } from "store/types/IFeatureSets";
+import { SnackDirectory } from "../Shared/SnackDirectory";
 import { TitleDirectory } from "../Shared/TitleDirectory";
 import { FeatureSetsActionButton } from "./Components/FeatureSetsActionButton";
 import { FeatureSetsModal, typeModal } from "./Components/FeatureSetsModal";
-import { FeatureSetsTable } from "./Components/FeatureSetsTable";
+import { FeatureSetsTable } from "./Components/Table/FeatureSetsTable";
 
 interface Props {}
 
@@ -27,9 +30,7 @@ interface IModal {
 
 export const FeatureSets = (props: Props) => {
   const [page, setPage] = React.useState(0);
-
-  const [selectedRow, setSelectedRow] = React.useState<IFeatureSets[]>([]);
-  const [infoRow, setInfoRow] = React.useState<IFeatureSets>();
+  const [snack, setSnack] = React.useState(false);
 
   const [modal, setModal] = React.useState<IModal>({
     isOpen: false,
@@ -42,15 +43,28 @@ export const FeatureSets = (props: Props) => {
   const { isLoading, featureSets, count, error } = useAppSelector(
     selectFeatureSetsData
   );
-  // ==========
+  // Snack =====
+  React.useEffect(() => {
+    if (error.length !== 0) {
+      setSnack(true);
+    }
+  }, [error]);
+
+  const handleSnackClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    dispatch(setFeatureSetsError(""));
+    setSnack(false);
+  };
+  // ===========
   // Table ====
   React.useEffect(() => {
     dispatch(fetchFeatureSets());
-    dispatch(getCountFeatureSets());
   }, []);
-  React.useEffect(() => {
-    dispatch(fetchFeatureSets(page + 1));
-  }, [page]);
   // ==========
   // Modal window ====
   const handleInsertItem = () => {
@@ -60,21 +74,43 @@ export const FeatureSets = (props: Props) => {
       mode: typeModal.add,
     });
   };
+  const handleEditItem = () => {
+    setModal({
+      isOpen: true,
+      title: `Edit set features`,
+      mode: typeModal.edit,
+    });
+  };
   const handleClose = () => {
     setModal({
       isOpen: false,
       title: "",
       mode: typeModal.add,
     });
+    dispatch(setFeatureSetCurrent({} as IFeatureSets));
   };
   // =================
   // Action modal window ===
   const handleInsertFeatureSet = (data: IFeatureSets) => {
-    dispatch(insertFeatureSets(data, page + 1));
+    const uni = featureSets.find((el) => el.component.id === data.component.id);
+    if (uni) {
+      dispatch(setFeatureSetsError("Не уникально"));
+    } else {
+      dispatch(insertFeatureSets(data));
+    }
+  };
+  const handleEditFeatureSet = (data: IFeatureSets) => {
+    dispatch(editFeatureSets(data));
   };
   // =======================
+
   return (
     <>
+      <SnackDirectory
+        error={error}
+        snack={snack}
+        handleSnackClose={handleSnackClose}
+      />
       <TitleDirectory title="Наборы характеристик" />
       <FeatureSetsActionButton handleInsertItem={handleInsertItem} />
       <Grid container spacing={1}>
@@ -84,16 +120,16 @@ export const FeatureSets = (props: Props) => {
             page={page}
             setPage={setPage}
             rowCount={count}
+            isLoading={isLoading}
+            handleEditItem={handleEditItem}
           />
         </Grid>
-        {/* <Grid item md={4}>
-          info
-        </Grid> */}
       </Grid>
       <FeatureSetsModal
         {...modal}
         handleClose={handleClose}
         handleInsertFeatureSets={handleInsertFeatureSet}
+        handleEditFeatureSets={handleEditFeatureSet}
       />
     </>
   );

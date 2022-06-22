@@ -7,6 +7,7 @@ interface featureSets {
   isLoading: boolean;
   error: string;
   count: number;
+  current: IFeatureSets;
 }
 
 const initialState: featureSets = {
@@ -14,6 +15,7 @@ const initialState: featureSets = {
   isLoading: false,
   error: "",
   count: 0,
+  current: {} as IFeatureSets,
 };
 
 export const featureSetsSlice = createSlice({
@@ -23,7 +25,7 @@ export const featureSetsSlice = createSlice({
     getFeatureSetsStart(state) {
       state.isLoading = true;
     },
-    getFeatureSetsSuccess(state, action: PayloadAction<IFeatureSets[]>) {
+    setFeatureSetsSuccess(state, action: PayloadAction<IFeatureSets[]>) {
       state.isLoading = false;
       state.featureSets = action.payload;
     },
@@ -35,7 +37,18 @@ export const featureSetsSlice = createSlice({
       state.isLoading = false;
       state.count = action.payload;
     },
+    setFeatureSetCurrent(state, action: PayloadAction<IFeatureSets>) {
+      state.current = action.payload;
+    },
   },
 });
+
+export const {
+  getFeatureSetsStart,
+  setFeatureSetsSuccess,
+  setFeatureSetsError,
+  setFeatureSetsCount,
+  setFeatureSetCurrent,
+} = featureSetsSlice.actions;
 
 export default featureSetsSlice.reducer;

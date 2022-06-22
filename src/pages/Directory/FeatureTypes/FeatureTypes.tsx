@@ -139,7 +139,12 @@ export const FeatureTypes = (props: Props) => {
   // ===============================
   // Action Modal Window============
   const handleInsertFeatureTypes = (data: IFeatureTypes) => {
-    dispatch(insertFeatureTypes(data));
+    const uni = featureTypes.find((el) => el.feature === data.feature);
+    if (uni) {
+      dispatch(setFeatureTypesError("Не уникально"));
+    } else {
+      dispatch(insertFeatureTypes(data));
+    }
   };
   const handleEditFeatureTypes = (data: IFeatureTypes) => {
     dispatch(editFeatureTypes(data));

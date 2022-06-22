@@ -48,7 +48,6 @@ export const ComponentTypesModal = (props: Props) => {
     mode,
     title,
     row = [],
-    // infoRow,
     handleClose,
     handleEditComponentTypes,
     handleInsertComponentTypes,
@@ -74,6 +73,7 @@ export const ComponentTypesModal = (props: Props) => {
   const upDateFormFields = (currentRow: IComponentType) => {
     setValue("name", currentRow.name, { shouldDirty: true });
   };
+
   React.useEffect(() => {
     upDateFormFields(currentRow);
   }, [isOpen]);

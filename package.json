@@ -24,6 +24,7 @@
     "@types/yup": "^0.29.14",
     "axios": "^0.27.2",
     "firebase": "^9.8.3",
+    "lodash.clonedeep": "^4.5.0",
     "qs": "^6.10.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -62,6 +63,7 @@
   },
   "devDependencies": {
     "@mui/x-data-grid-generator": "^5.11.1",
+    "@types/lodash.clonedeep": "^4.5.7",
     "@types/react-treeview": "^0.4.3",
     "@types/uuid": "^8.3.4"
   }

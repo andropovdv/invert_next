@@ -20,8 +20,6 @@ const App: FC = () => {
     dispatch(checkUser());
   }, []);
 
-  console.log("isLoading: ", isLoading);
-
   return (
     <>
       {isLoading ? (

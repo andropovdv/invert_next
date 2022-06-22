@@ -1,26 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Grid } from "@mui/material";
+import { GridColDef } from "@mui/x-data-grid";
+import { useAppDispatch, useAppSelector } from "hooks/store";
 import React, { useState } from "react";
-import { TableDirectory } from "../Shared/TableDirectory";
-import { TitleDirectory } from "../Shared/TitleDirectory";
-import { InfoBlockDirectory } from "../Shared/InfoBlockDirectory";
-
-// import { useDemoData } from "@mui/x-data-grid-generator";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store";
-import { selectVendorData } from "../../../store/selectors";
+import { selectVendorData } from "store/selectors";
+import { setVendorError } from "store/slices/vendorsSlice";
 import {
   editVendorApi,
   fetchVendors,
   insertVendorApi,
   removeVendorApi,
-} from "../../../store/thunks/vendorsThunk";
-import { IVendor } from "../../../store/types/IVendor";
-import { GridColDef } from "@mui/x-data-grid";
+} from "store/thunks/vendorsThunk";
+import { IVendor } from "store/types/IVendor";
 import { ActionButtonDirectory } from "../Shared/ActionButtonDirectory";
-import { typeModal, OperationModal } from "./Components/OperationModal";
-
-import { vendorsSlice as venAction } from "../../../store/slices/vendorsSlice";
+import { InfoBlockDirectory } from "../Shared/InfoBlockDirectory";
 import { SnackDirectory } from "../Shared/SnackDirectory";
+import { TableDirectory } from "../Shared/TableDirectory";
+import { TitleDirectory } from "../Shared/TitleDirectory";
+import { OperationModal, typeModal } from "./Components/OperationModal";
 
 interface Props {}
 
@@ -105,7 +102,12 @@ export const Vendors = (props: Props) => {
   };
 
   const handleInsertVendor = (data: IVendor) => {
-    dispatch(insertVendorApi(data));
+    const uni = vendors.find((el) => el.name === data.name);
+    if (uni) {
+      dispatch(setVendorError("не уникально"));
+    } else {
+      dispatch(insertVendorApi(data));
+    }
   };
 
   const handleEditVendor = (data: IVendor) => {
@@ -123,7 +125,7 @@ export const Vendors = (props: Props) => {
     if (reason === "clickaway") {
       return;
     }
-    dispatch(venAction.actions.setVendorError(""));
+    dispatch(setVendorError(""));
     setSnack(false);
   };
 

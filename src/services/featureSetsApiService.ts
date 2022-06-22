@@ -1,4 +1,5 @@
 import "../firebase";
+import { v4 } from "uuid";
 import {
   child,
   get,
@@ -7,31 +8,27 @@ import {
   remove,
   update,
 } from "firebase/database";
-import { v4 } from "uuid";
-import { IVendor } from "store/types/IVendor";
-import { vendorsData } from "dataUpload/vendors";
+import { IFeatureSets } from "store/types/IFeatureSets";
+import { featureSetsData } from "dataUpload/vendors";
 
 const db = getDatabase();
-const refDB = ref(db, "vendors/");
+const refDB = ref(db, "sets_feature_components/");
 
 interface UpData {
-  [key: string]: IVendor;
+  [key: string]: IFeatureSets;
 }
 
-export const vendorApi = {
-  fillVendors: async () => {
+export const featureSetsApi = {
+  fillFeatureSets: async () => {
     let updates = {} as UpData;
-    vendorsData.forEach((el) => {
+    featureSetsData.forEach((el) => {
       const uud = v4();
       const data = { ...el, id: uud };
-      // const updates = {} as UpData;
       updates[`/${uud}`] = data;
-      // update(refDB, updates);
     });
-    // console.log("updates: ", updates);
     await update(refDB, updates);
   },
-  getVendor: async () => {
+  getFeatureSets: async () => {
     try {
       const res = await get(child(refDB, "/"));
       if (res.exists()) {
@@ -41,7 +38,7 @@ export const vendorApi = {
       console.log(e);
     }
   },
-  addVendor: async (payload: IVendor) => {
+  addFeatureSets: async (payload: IFeatureSets) => {
     try {
       const uud = v4();
       const data = { ...payload, id: uud };
@@ -52,8 +49,9 @@ export const vendorApi = {
       console.log(e);
     }
   },
-  editVendor: async (payload: IVendor) => {
+  editFeatureSets: async (payload: IFeatureSets) => {
     try {
+      console.log("payload: ", payload);
       const updates = {} as UpData;
       updates[`/${payload.id}`] = payload;
       await update(refDB, updates);
@@ -61,9 +59,9 @@ export const vendorApi = {
       console.log(e);
     }
   },
-  removeVendor: async (id: string) => {
+  removeFeatureSets: async (id: string) => {
     try {
-      await remove(ref(db, `/vendors/${id}`));
+      await remove(ref(db, `/sets_feature_components/${id}`));
     } catch (e) {
       console.log(e);
     }

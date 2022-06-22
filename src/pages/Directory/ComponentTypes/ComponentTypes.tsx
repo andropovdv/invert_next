@@ -121,7 +121,12 @@ export const ComponentTypes = (props: Props) => {
     setVisibly({ isOpen: false, mode: typeModal.add }),
   ];
   const handleInsertComponentTypes = (data: IComponentType) => {
-    dispatch(insertComponentTypes(data));
+    const uni = componentTypes.find((el) => el.name === data.name);
+    if (uni) {
+      dispatch(setComponentTypesError("Не уникально"));
+    } else {
+      dispatch(insertComponentTypes(data));
+    }
   };
   const handleEditComponentTypes = (data: IComponentType) => {
     dispatch(editComponentTypes(data));

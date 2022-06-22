@@ -1,7 +1,5 @@
 import { Button, Paper, Stack } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import EditIcon from "@mui/icons-material/Edit";
 import React from "react";
 
 interface Props {
@@ -20,12 +18,6 @@ export const FeatureSetsActionButton = (props: Props) => {
             startIcon={<AddBoxIcon />}
           >
             Create
-          </Button>
-          <Button variant="contained" startIcon={<EditIcon />}>
-            Edit
-          </Button>
-          <Button variant="contained" startIcon={<DeleteIcon />}>
-            Remove
           </Button>
         </Stack>
       </Paper>

@@ -11,7 +11,7 @@ type ILink = {
 
 export type IFeature = {
   name_feature: ILink;
-  value_feature: string[];
+  value_feature: Array<string>;
   type: string;
   unit: string;
 };
