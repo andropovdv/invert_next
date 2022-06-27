@@ -15,21 +15,27 @@ export interface IValuesChip {
   idNameFeature: string;
 }
 
-export const fetchFeatureSets = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(getFeatureSetsStart());
-    const res = await featureSetsApi.getFeatureSets();
-    if (res) {
-      const listObject = Object.keys(res).map((el: any) => res[el]);
-      dispatch(setFeatureSetsSuccess(listObject));
-      dispatch(setFeatureSetsCount(listObject.length));
-    } else {
-      dispatch(setFeatureSetsError("Загрузка не удалась"));
+export const fetchFeatureSets =
+  (id?: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(getFeatureSetsStart());
+      let res: any;
+      if (id) {
+        res = await featureSetsApi.getFeatureSetById(id);
+      } else {
+        res = await featureSetsApi.getFeatureSets();
+      }
+      if (res) {
+        const listObject = Object.keys(res).map((el: any) => res[el]);
+        dispatch(setFeatureSetsSuccess(listObject));
+        dispatch(setFeatureSetsCount(listObject.length));
+      } else {
+        dispatch(setFeatureSetsError("Загрузка не удалась"));
+      }
+    } catch (e) {
+      dispatch(setFeatureSetsError((e as Error).message));
     }
-  } catch (e) {
-    dispatch(setFeatureSetsError((e as Error).message));
-  }
-};
+  };
 
 export const insertFeatureSets =
   (data: IFeatureSets) => async (dispatch: AppDispatch) => {

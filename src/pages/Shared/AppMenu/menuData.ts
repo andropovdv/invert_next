@@ -32,6 +32,11 @@ export const data: Menu[] = [
         label: "Наборы свойств",
         to: "/featureSets",
       },
+      {
+        id: 15,
+        label: "Компоненты",
+        to: "/components",
+      },
     ],
   },
   {

@@ -2,7 +2,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import React from "react";
-import { IComponentType } from "../../../../store/types/IComponentTypes";
 import { useForm } from "react-hook-form";
 import {
   Button,
@@ -17,6 +16,7 @@ import {
   TextField,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { IComponentType } from "store/types/IComponentTypes";
 
 interface Props {
   handleInsertComponentTypes: (data: IComponentType) => void;

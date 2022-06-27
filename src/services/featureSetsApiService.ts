@@ -13,6 +13,7 @@ import { featureSetsData } from "dataUpload/vendors";
 
 const db = getDatabase();
 const refDB = ref(db, "sets_feature_components/");
+const dbRoot = ref(db);
 
 interface UpData {
   [key: string]: IFeatureSets;
@@ -32,6 +33,17 @@ export const featureSetsApi = {
     try {
       const res = await get(child(refDB, "/"));
       if (res.exists()) {
+        return res.val();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  getFeatureSetById: async (id: string) => {
+    try {
+      const res = await get(child(dbRoot, `sets_feature_components/${id}`));
+      if (res.exists()) {
+        console.log(res.val());
         return res.val();
       }
     } catch (e) {

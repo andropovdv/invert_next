@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
@@ -82,6 +83,7 @@ export const FeatureSetsModal = (props: Props) => {
   const { componentTypes } = useAppSelector(selectComponentTypesData);
   const { featureTypes } = useAppSelector(selectFeatureTypesData);
   const { current, isLoading } = useAppSelector(selectFeatureSetsData);
+  const { featureSets } = useAppSelector(selectFeatureSetsData);
 
   const disabledField = useDisabled(mode);
   console.log("errors: ", errors);
@@ -117,21 +119,27 @@ export const FeatureSetsModal = (props: Props) => {
 
   // =========
 
-  const preLoadData = (data: any) => {
+  const preLoadData = (data: any, mode: string): IFeatureSets => {
     let result = {} as IFeatureSets;
     console.log("In:", data);
     const nameComp = componentTypes.find((el) => el.id === data.component.id)!;
-    let res = {} as any;
+    const featureRow = featureSets.find(
+      (el) => el.component.id === data.component.id
+    );
+
+    let res: any = {} as any;
     let fin = [];
 
     for (let el of data.feature) {
       res = featureTypes.find((e) => el.id === e.id)!;
+      let fs = featureRow?.feature.find((e) => e.name_feature.id === el.id);
+      console.log("fs: ", fs);
       fin.push({
         name_feature: { id: res.id, name: res.feature },
         type: res.field_type,
         unit: res.unit,
-        value_feature: ["FirstRecord"],
-        // value_feature: [],
+        value_feature:
+          mode === "edit" ? (fs?.value_feature ? fs?.value_feature : []) : [],
       });
     }
     result = {
@@ -143,12 +151,12 @@ export const FeatureSetsModal = (props: Props) => {
   };
 
   const onSubmit = (data: any) => {
-    const result = preLoadData(data);
-    console.log(result);
     if (mode === typeModal.add) {
+      const result = preLoadData(data, "add");
       handleInsertFeatureSets(result);
       handleClose();
     } else if (mode === typeModal.edit) {
+      const result = preLoadData(data, "edit");
       handleEditFeatureSets(result);
       handleClose();
     } else if (mode === typeModal.delete) {
@@ -193,7 +201,6 @@ export const FeatureSetsModal = (props: Props) => {
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <Select
-                    // disabled={disabledField}
                     error={errors.component?.name ? true : false}
                     value={value}
                     onChange={onChange}
@@ -232,7 +239,6 @@ export const FeatureSetsModal = (props: Props) => {
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
-                          // direction: "row",
                         }}
                       >
                         <InputLabel htmlFor="comp">
@@ -246,7 +252,6 @@ export const FeatureSetsModal = (props: Props) => {
                           control={control}
                           render={({ field: { onChange, value } }) => (
                             <Select
-                              // disabled={disabledField}
                               fullWidth
                               error={errors.feature ? true : false}
                               value={value}

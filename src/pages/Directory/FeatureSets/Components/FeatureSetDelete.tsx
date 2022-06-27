@@ -17,7 +17,6 @@ type Props = {
 export const FeatureSetDelete = (props: Props) => {
   const { anchor, setAnchor, row } = props;
 
-  console.log("props: ", props);
   const dispatch = useAppDispatch();
 
   const handleCancel = () => {
@@ -49,11 +48,11 @@ export const FeatureSetDelete = (props: Props) => {
           <Typography
             sx={{ marginRight: 2, marginLeft: 2 }}
           >{`Вы хотите удалить "${row.component.name}" ?`}</Typography>
-          <IconButton color="primary" onClick={() => handleDelete(row)}>
-            <DoneIcon />
-          </IconButton>
           <IconButton color="error" onClick={() => handleCancel()}>
             <CancelIcon />
+          </IconButton>
+          <IconButton color="primary" onClick={() => handleDelete(row)}>
+            <DoneIcon />
           </IconButton>
         </Box>
       </Popover>

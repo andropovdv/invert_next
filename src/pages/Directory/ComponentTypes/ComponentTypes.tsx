@@ -57,11 +57,6 @@ export const ComponentTypes = (props: Props) => {
     dispatch(fetchComponentTypes());
   }, []);
 
-  // React.useEffect(() => {
-  //   if (componentTypes.length === 0) {
-  //     componentTypesApi.fillContent();
-  //   }
-  // }, [componentTypes]);
   const columnsApi: GridColDef[] = [
     { field: "name", headerName: "Тип характеристики", flex: 1 },
   ];

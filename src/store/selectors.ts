@@ -8,3 +8,4 @@ export const selectComponentTypesData = (state: RootState) =>
   state.componentTypesSlice;
 export const selectFeatureSetsData = (state: RootState) =>
   state.featureSetsSlice;
+export const selectComponetsData = (state: RootState) => state.componentsSlice;

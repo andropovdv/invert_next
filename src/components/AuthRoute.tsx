@@ -8,6 +8,7 @@ import { FeatureSets } from "pages/Directory/FeatureSets/FeatureSets";
 import { NotFound } from "pages/NotFound/NotFound";
 import { GuestPage } from "pages/Shared/GuestPage";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { Components } from "pages/Directory/Components/Components";
 
 export const AuthRoute = () => {
   return (
@@ -21,6 +22,7 @@ export const AuthRoute = () => {
         <Route path="featureTypes" element={<FeatureTypes />} />
         <Route path="componentTypes" element={<ComponentTypes />} />
         <Route path="featureSets" element={<FeatureSets />} />
+        <Route path="components" element={<Components />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

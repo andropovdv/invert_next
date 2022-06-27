@@ -224,5 +224,20 @@
         }
       ]
     }
+  ],
+  "components": [
+    {
+      "id": "#######",
+      "typeComponent": { "id": "#######", "name": "typeComponent" },
+      "vendor": { "id": "#######", "name": "Asus" },
+      "model": "GA-400BX",
+      "featureSet": {
+        "id": "#######",
+        "feature": [
+          { "id": "idTypeFeature #######", "value": "Socket 7" },
+          { "id": "idTypeFeature #######", "value": "DDR 3" }
+        ]
+      }
+    }
   ]
 }
