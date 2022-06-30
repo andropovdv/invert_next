@@ -18,7 +18,7 @@ export const EnhancedTableToolbar = (props: Props) => {
       disableGutters
       variant="dense"
       sx={{
-        backgroundColor: (theme) =>
+        backgroundColor: (theme: any) =>
           alpha(
             theme.palette.primary.main,
             theme.palette.action.activatedOpacity
@@ -35,7 +35,7 @@ export const EnhancedTableToolbar = (props: Props) => {
           rowsPerPage={10}
           onPageChange={onPageChange}
           rowsPerPageOptions={[10]}
-          labelDisplayedRows={({ page }) => {
+          labelDisplayedRows={({ page }: any) => {
             return `Page: ${page + 1}`;
           }}
         />

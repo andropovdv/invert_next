@@ -3,8 +3,11 @@ import componentTypesSlice from "./slices/componentTypesSlice";
 import featureTypesSlice from "./slices/featuresTypesSlice";
 import vendorsSlice from "./slices/vendorsSlice";
 import componentsSlice from "./slices/componentsSlice";
+import locationSlice from "./slices/locationSlice";
 import auth from "./slices/authSlice";
 import getUsersSlice from "./slices/usersSlice";
+import locationCitySlice from "./slices/locationCitySlice";
+import locationStreetSlice from "./slices/locationStreetSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 const rootReducer = combineReducers({
@@ -15,6 +18,9 @@ const rootReducer = combineReducers({
   componentTypesSlice,
   featureSetsSlice,
   componentsSlice,
+  locationSlice,
+  locationCitySlice,
+  locationStreetSlice,
 });
 
 export const store = configureStore({

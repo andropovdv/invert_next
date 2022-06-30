@@ -77,7 +77,9 @@ export const FeatureSetsRows = (props: Props) => {
 
             <IconButton
               sx={{ flex: "0 1 auto" }}
-              onClick={(e) => setAnchor(e.currentTarget)}
+              onClick={(e: React.MouseEvent<HTMLElement>) =>
+                setAnchor(e.currentTarget)
+              }
             >
               <DeleteIcon color="error" />
             </IconButton>

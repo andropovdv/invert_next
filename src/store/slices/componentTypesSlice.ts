@@ -19,18 +19,27 @@ export const componentTypesSlice = createSlice({
   name: "componentTypes",
   initialState,
   reducers: {
-    getComponentTypesStart(state) {
+    getComponentTypesStart(state: componentTypes) {
       state.isLoading = true;
     },
-    setComponentTypesSuccess(state, action: PayloadAction<IComponentType[]>) {
+    setComponentTypesSuccess(
+      state: componentTypes,
+      action: PayloadAction<IComponentType[]>
+    ) {
       state.isLoading = false;
       state.componentTypes = action.payload;
     },
-    setComponentTypesError(state, action: PayloadAction<string>) {
+    setComponentTypesError(
+      state: componentTypes,
+      action: PayloadAction<string>
+    ) {
       state.isLoading = false;
       state.error = action.payload;
     },
-    setComponentTypesCount(state, action) {
+    setComponentTypesCount(
+      state: componentTypes,
+      action: PayloadAction<number>
+    ) {
       state.isLoading = false;
       state.count = action.payload;
     },

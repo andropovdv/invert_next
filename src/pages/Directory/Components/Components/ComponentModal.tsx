@@ -94,7 +94,7 @@ export const ComponentModal = (props: Props) => {
 
   const watchComponentType = useWatch({ control, name: "typeComponent.id" });
 
-  const [loaclRow, setLocalRow] = React.useState<IFeatureSets>();
+  const [localRow, setLocalRow] = React.useState<IFeatureSets>();
 
   let arr: any[];
   React.useEffect(() => {
@@ -149,7 +149,7 @@ export const ComponentModal = (props: Props) => {
     const nameComponentTypeById = componentTypes.find(
       (el) => el.id === data.typeComponent.id
     );
-    const idFeatureSet = loaclRow?.id;
+    const idFeatureSet = localRow?.id;
 
     let arr: any = [];
     data.featureSet.feature.forEach((el: any) => {
@@ -222,8 +222,8 @@ export const ComponentModal = (props: Props) => {
   };
   const getValueFeature = (feature?: string): any[] => {
     let res: any;
-    if (feature && loaclRow) {
-      res = loaclRow.feature.find((e1) => e1.name_feature.name === feature);
+    if (feature && localRow) {
+      res = localRow.feature.find((e1) => e1.name_feature.name === feature);
       return res.value_feature;
     } else {
       return [];

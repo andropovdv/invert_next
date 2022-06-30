@@ -9,3 +9,8 @@ export const selectComponentTypesData = (state: RootState) =>
 export const selectFeatureSetsData = (state: RootState) =>
   state.featureSetsSlice;
 export const selectComponetsData = (state: RootState) => state.componentsSlice;
+export const selectLocationsData = (state: RootState) => state.locationSlice;
+export const selectLocationsCityData = (state: RootState) =>
+  state.locationCitySlice;
+export const selectLocationsStreetData = (state: RootState) =>
+  state.locationStreetSlice;

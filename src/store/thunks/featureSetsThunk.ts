@@ -82,12 +82,6 @@ export const removeFeatureSets =
     try {
       dispatch(getFeatureSetsStart());
       await featureSetsApi.removeFeatureSets(id);
-      // const query = data.map((el: IFeatureSets) =>
-      //   featureSetsApi.removeFeatureSets(el.id)
-      // );
-      // for (const element of query) {
-      //   await element;
-      // }
       const res = await featureSetsApi.getFeatureSets();
       if (res) {
         const listObject = Object.keys(res).map((el: any) => res[el]);

@@ -37,6 +37,11 @@ export const data: Menu[] = [
         label: "Компоненты",
         to: "/components",
       },
+      {
+        id: 16,
+        label: "Расположение",
+        to: "/locations",
+      },
     ],
   },
   {

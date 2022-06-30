@@ -9,6 +9,7 @@ import { NotFound } from "pages/NotFound/NotFound";
 import { GuestPage } from "pages/Shared/GuestPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Components } from "pages/Directory/Components/Components";
+import { Locations } from "pages/Directory/Locations/Locations";
 
 export const AuthRoute = () => {
   return (
@@ -23,6 +24,7 @@ export const AuthRoute = () => {
         <Route path="componentTypes" element={<ComponentTypes />} />
         <Route path="featureSets" element={<FeatureSets />} />
         <Route path="components" element={<Components />} />
+        <Route path="locations" element={<Locations />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

@@ -1,19 +1,18 @@
 import { IconButton, Popover, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useAppDispatch } from "hooks/store";
-import { IFeatureSets } from "store/types/IFeatureSets";
-
+import { removeLocationStreet } from "store/thunks/locationStreetThunk";
+import { ILocationData } from "store/types/ILocations";
 import DoneIcon from "@mui/icons-material/Done";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { removeFeatureSets } from "store/thunks/featureSetsThunk";
 
 type Props = {
   anchor: null | HTMLElement;
-  setAnchor: (d: any) => void;
-  row: IFeatureSets;
+  setAnchor: (data: any) => void;
+  row: ILocationData;
 };
 
-export const FeatureSetDelete = (props: Props) => {
+export const LocationStreetTableDelete = (props: Props) => {
   const { anchor, setAnchor, row } = props;
 
   const dispatch = useAppDispatch();
@@ -22,8 +21,8 @@ export const FeatureSetDelete = (props: Props) => {
     setAnchor(null);
   };
 
-  const handleDelete = (row: IFeatureSets) => {
-    dispatch(removeFeatureSets(row.id));
+  const handleDelete = (row: ILocationData[]) => {
+    dispatch(removeLocationStreet(row));
   };
 
   return (
@@ -41,16 +40,15 @@ export const FeatureSetDelete = (props: Props) => {
             width: "100%",
             alignItems: "center",
             backgroundColor: "#ff9e80",
-            // backgroundColor: "#42a5f5",
           }}
         >
-          <Typography
-            sx={{ marginRight: 2, marginLeft: 2 }}
-          >{`Вы хотите удалить "${row.component.name}" ?`}</Typography>
+          <Typography sx={{ marginRight: 2, marginLeft: 2 }}>
+            {`вы хотите удалить "${row.name}" ?`}
+          </Typography>
           <IconButton color="error" onClick={() => handleCancel()}>
             <CancelIcon />
           </IconButton>
-          <IconButton color="primary" onClick={() => handleDelete(row)}>
+          <IconButton color="primary" onClick={() => handleDelete([row])}>
             <DoneIcon />
           </IconButton>
         </Box>
