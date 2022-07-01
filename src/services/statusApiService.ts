@@ -1,5 +1,3 @@
-import "../firebase";
-import { v4 } from "uuid";
 import {
   child,
   get,
@@ -8,17 +6,19 @@ import {
   remove,
   update,
 } from "firebase/database";
-import { ILocation } from "store/types/ILocations";
+import { IStatus } from "store/types/IStatus";
+import "../firebase";
+import { v4 } from "uuid";
 
 const db = getDatabase();
-const refDB = ref(db, "locations/");
+const refDB = ref(db, "status/");
 
 interface UpDate {
-  [key: string]: ILocation;
+  [key: string]: IStatus;
 }
 
-export const locationApi = {
-  getLocation: async () => {
+export const statusApi = {
+  getStatus: async () => {
     try {
       const res = await get(child(refDB, "/"));
       if (res.exists()) {
@@ -28,29 +28,29 @@ export const locationApi = {
       console.log(e);
     }
   },
-  addLocation: async (payload: ILocation) => {
+  addStatus: async (payload: IStatus) => {
     try {
       const uud = v4();
       const data = { ...payload, id: uud };
       const updates = {} as UpDate;
       updates["/" + uud] = data;
-      await update(refDB, updates);
+      update(refDB, updates);
     } catch (e) {
       console.log(e);
     }
   },
-  editLocation: async (payload: ILocation) => {
+  editStatus: async (payload: IStatus) => {
     try {
       const updates = {} as UpDate;
       updates[`/${payload.id}`] = payload;
-      await update(refDB, updates);
+      update(refDB, updates);
     } catch (e) {
       console.log(e);
     }
   },
-  removeLocation: async (id: string) => {
+  removeStatus: async (id: string) => {
     try {
-      await remove(ref(db, `/locations/${id}`));
+      await remove(ref(db, `/status/${id}`));
     } catch (e) {
       console.log(e);
     }

@@ -5,7 +5,12 @@ import { useAppDispatch, useAppSelector } from "hooks/store";
 import React from "react";
 import { selectLocationsData } from "store/selectors";
 import { setLocationError } from "store/slices/locationSlice";
-import { fetchLocations } from "store/thunks/locationsThunk";
+import {
+  editLocations,
+  fetchLocations,
+  insertLocations,
+  removeLocations,
+} from "store/thunks/locationsThunk";
 import { ILocation } from "store/types/ILocations";
 import { typeModal } from "../Components/Components/ComponentModal";
 import { ActionButtonDirectory } from "../Shared/ActionButtonDirectory";
@@ -135,9 +140,20 @@ export const Locations = (props: Props) => {
       mode: "add",
     });
   };
-  const handleInsertLocation = (data: ILocation) => {};
-  const handleEditLocation = (data: ILocation) => {};
-  const handleRemoveLocation = (data: ILocation[]) => {};
+  const handleInsertLocation = (data: ILocation) => {
+    const uni = locations.find((el) => el.alias === data.alias);
+    if (uni) {
+      dispatch(setLocationError("Не уникально"));
+    } else {
+      dispatch(insertLocations(data));
+    }
+  };
+  const handleEditLocation = (data: ILocation) => {
+    dispatch(editLocations(data));
+  };
+  const handleRemoveLocation = (data: ILocation[]) => {
+    dispatch(removeLocations(data));
+  };
   // ============
 
   return (

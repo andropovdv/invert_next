@@ -81,7 +81,6 @@ export const ComponentModal = (props: Props) => {
     handleSubmit,
     reset,
     setValue,
-    getValues,
     register,
     control,
     formState: { errors },
@@ -175,7 +174,6 @@ export const ComponentModal = (props: Props) => {
         },
       };
     }
-
     return result;
   };
 
@@ -394,7 +392,6 @@ export const ComponentModal = (props: Props) => {
               <LoadingButton type="submit" color="success" loading={isLoading}>
                 Сохранить
               </LoadingButton>
-              {/* <Button type="submit">Save</Button> */}
             </DialogActions>
           </form>
         </Dialog>

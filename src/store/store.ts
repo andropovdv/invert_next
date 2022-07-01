@@ -8,6 +8,8 @@ import auth from "./slices/authSlice";
 import getUsersSlice from "./slices/usersSlice";
 import locationCitySlice from "./slices/locationCitySlice";
 import locationStreetSlice from "./slices/locationStreetSlice";
+import eventSlice from "./slices/eventSlice";
+import statusSlice from "./slices/statusSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 const rootReducer = combineReducers({
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   locationSlice,
   locationCitySlice,
   locationStreetSlice,
+  eventSlice,
+  statusSlice,
 });
 
 export const store = configureStore({

@@ -25,7 +25,7 @@ import {
 } from "store/thunks/locationCityThunk";
 import { ILocationData } from "store/types/ILocations";
 import { LocationCityTableRow } from "./LocationCityTableRow";
-import { EnhancedTableLocation } from "./EnhancedTableCity";
+import { EnhancedTableLocation } from "../EnhancedTableCity";
 import { setLocationCityError } from "store/slices/locationCitySlice";
 import { Box } from "@mui/system";
 

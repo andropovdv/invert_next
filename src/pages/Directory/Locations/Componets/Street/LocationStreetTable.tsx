@@ -24,7 +24,7 @@ import {
   fetchLocationStreet,
   insertLocationStreet,
 } from "store/thunks/locationStreetThunk";
-import { EnhancedTableLocation } from "../City/EnhancedTableCity";
+import { EnhancedTableLocation } from "../EnhancedTableCity";
 import { ILocationData } from "store/types/ILocations";
 import { LocationStreetTableRow } from "./LocationStreetTableRow";
 

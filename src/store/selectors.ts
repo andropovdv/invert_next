@@ -14,3 +14,5 @@ export const selectLocationsCityData = (state: RootState) =>
   state.locationCitySlice;
 export const selectLocationsStreetData = (state: RootState) =>
   state.locationStreetSlice;
+export const selectEventData = (state: RootState) => state.eventSlice;
+export const selectStatusData = (state: RootState) => state.statusSlice;

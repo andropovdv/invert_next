@@ -2,8 +2,19 @@
 import React from "react";
 import { ILocation } from "store/types/ILocations";
 import { useForm } from "react-hook-form";
-import { Dialog, DialogTitle, Tab } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  List,
+  ListItem,
+  ListItemText,
+  Tab,
+} from "@mui/material";
+import { LoadingButton, TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box } from "@mui/system";
 import { LocationForm } from "./LocationForm";
 import { LocationCityTable } from "./City/LocationCityTable";
@@ -30,8 +41,7 @@ export const LocationModal = (props: Props) => {
     mode,
     title,
     isLoading,
-    row,
-    infoRow,
+    row = [],
     handleClose,
     handleInsertLocation,
     handleEditLocation,
@@ -40,10 +50,25 @@ export const LocationModal = (props: Props) => {
 
   const { reset } = useForm();
 
-  let currentRow: ILocation = {} as ILocation;
-  if (row) {
-    currentRow = Object.assign({}, ...row.map((el) => ({ ...el })));
-  }
+  const [tab, setTab] = React.useState("1");
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
+    setTab(newValue);
+  };
+
+  const onDelete = (row: ILocation[]) => {
+    if (row) {
+      handleRemoveLocation(row);
+    }
+    reset({
+      city: {},
+      street: {},
+      alias: "",
+      floor: "",
+      house: "",
+      room: "",
+    });
+    handleClose();
+  };
 
   const clickClose = (e?: Object, r?: string) => {
     if (r !== "backdropClick") {
@@ -55,26 +80,57 @@ export const LocationModal = (props: Props) => {
         house: "",
         room: "",
       });
-      currentRow = {} as ILocation;
+      setTab("1");
       handleClose();
     }
   };
 
-  const [tab, setTab] = React.useState("1");
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-    setTab(newValue);
-  };
-
   return (
     <>
-      {mode === "delete" ? null : (
+      {mode === "delete" ? (
+        <Dialog
+          open={isOpen}
+          onClose={(e, r) => clickClose(e, r)}
+          fullWidth
+          maxWidth="sm"
+        >
+          <DialogTitle>{title}</DialogTitle>
+          <DialogContent dividers>
+            <DialogContentText variant="body1" component="span">
+              Вы действительно хотите удалить
+            </DialogContentText>
+            <List dense>
+              {row
+                ? row.map((el: ILocation) => (
+                    <ListItem key={el.id}>
+                      <ListItemText
+                        primary={`${el.alias}`}
+                        primaryTypographyProps={{ fontWeight: 700 }}
+                      />
+                    </ListItem>
+                  ))
+                : null}
+            </List>
+          </DialogContent>
+          <DialogActions>
+            <LoadingButton
+              color="error"
+              loading={isLoading}
+              onClick={() => onDelete(row)}
+            >
+              Удалить
+            </LoadingButton>
+            <Button onClick={clickClose}>Отмена</Button>
+          </DialogActions>
+        </Dialog>
+      ) : (
         <Dialog
           open={isOpen}
           onClose={clickClose}
           fullWidth
           maxWidth="sm"
           PaperProps={{
-            sx: { minHeight: 625 }, // TODO подобрать высоту
+            sx: { minHeight: 625 },
           }}
         >
           <DialogTitle>{title}</DialogTitle>
@@ -89,21 +145,21 @@ export const LocationModal = (props: Props) => {
             </Box>
             <TabPanel value="1" sx={{ padding: 0 }}>
               <LocationForm
+                isOpen={isOpen}
+                mode={mode}
                 setTab={setTab}
                 isLoading={isLoading}
                 row={row}
-                handleClose={handleClose}
+                handleClose={clickClose}
                 handleInsertLocation={handleInsertLocation}
                 handleEditLocation={handleEditLocation}
-                handleRemoveLocation={handleRemoveLocation}
               />
             </TabPanel>
             <TabPanel value="2">
-              {/* sx={{ display: "flex", flexGrow: 1 }} */}
-              <LocationCityTable handleClose={handleClose} />
+              <LocationCityTable handleClose={clickClose} />
             </TabPanel>
             <TabPanel value="3">
-              <LocationStreetTable handleClose={handleClose} />
+              <LocationStreetTable handleClose={clickClose} />
             </TabPanel>
           </TabContext>
         </Dialog>

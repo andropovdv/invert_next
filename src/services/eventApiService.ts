@@ -1,5 +1,3 @@
-import "../firebase";
-import { v4 } from "uuid";
 import {
   child,
   get,
@@ -8,17 +6,19 @@ import {
   remove,
   update,
 } from "firebase/database";
-import { ILocation } from "store/types/ILocations";
+import { IEvent } from "store/types/IEvent";
+import "../firebase";
+import { v4 } from "uuid";
 
 const db = getDatabase();
-const refDB = ref(db, "locations/");
+const refDB = ref(db, "events/");
 
 interface UpDate {
-  [key: string]: ILocation;
+  [key: string]: IEvent;
 }
 
-export const locationApi = {
-  getLocation: async () => {
+export const eventApi = {
+  getEvent: async () => {
     try {
       const res = await get(child(refDB, "/"));
       if (res.exists()) {
@@ -28,7 +28,7 @@ export const locationApi = {
       console.log(e);
     }
   },
-  addLocation: async (payload: ILocation) => {
+  addEvent: async (payload: IEvent) => {
     try {
       const uud = v4();
       const data = { ...payload, id: uud };
@@ -39,7 +39,7 @@ export const locationApi = {
       console.log(e);
     }
   },
-  editLocation: async (payload: ILocation) => {
+  editEvent: async (payload: IEvent) => {
     try {
       const updates = {} as UpDate;
       updates[`/${payload.id}`] = payload;
@@ -48,9 +48,9 @@ export const locationApi = {
       console.log(e);
     }
   },
-  removeLocation: async (id: string) => {
+  removeEvent: async (id: string) => {
     try {
-      await remove(ref(db, `/locations/${id}`));
+      await remove(ref(db, `/events/${id}`));
     } catch (e) {
       console.log(e);
     }

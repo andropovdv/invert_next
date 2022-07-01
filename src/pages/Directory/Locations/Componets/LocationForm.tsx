@@ -25,15 +25,17 @@ import {
 } from "store/selectors";
 import { fetchLocationCity } from "store/thunks/locationCityThunk";
 import { fetchLocationStreet } from "store/thunks/locationStreetThunk";
+import { typeModal } from "pages/Directory/Components/Components/ComponentModal";
 
 interface Props {
   setTab: (data: string) => void;
   isLoading: boolean;
   row?: ILocation[];
+  mode: typeModal;
+  isOpen: boolean;
   handleClose: () => void;
   handleInsertLocation: (data: ILocation) => void;
   handleEditLocation: (data: ILocation) => void;
-  handleRemoveLocation: (data: ILocation[]) => void;
 }
 
 const LocationSchema = yup.object().shape({
@@ -54,19 +56,15 @@ const LocationSchema = yup.object().shape({
 
 export const LocationForm = (props: Props) => {
   const {
+    mode,
     setTab,
     isLoading,
     row,
     handleClose,
+    isOpen,
     handleInsertLocation,
     handleEditLocation,
-    handleRemoveLocation,
   } = props;
-
-  let currentRow: ILocation = {} as ILocation;
-  if (row) {
-    currentRow = Object.assign({}, ...row.map((el) => ({ ...el })));
-  }
 
   const dispatch = useAppDispatch();
   const { locationCity } = useAppSelector(selectLocationsCityData);
@@ -80,17 +78,56 @@ export const LocationForm = (props: Props) => {
   const {
     handleSubmit,
     reset,
-    getValues,
+    setValue,
     register,
     control,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(LocationSchema),
   });
 
+  React.useEffect(() => {
+    if (mode === "edit" && row) {
+      setValue("city.id", row[0].city.id, { shouldDirty: true });
+      setValue("street.id", row[0].street.id, { shouldDirty: true });
+      setValue("alias", row[0].alias, { shouldDirty: true });
+      setValue("floor", row[0].floor, { shouldDirty: true });
+      setValue("house", row[0].house, { shouldDirty: true });
+      setValue("room", row[0].room, { shouldDirty: true });
+    }
+  }, [isOpen]);
+
+  const revisionData = (data: ILocation) => {
+    const cityName = locationCity.find(
+      (el: ILocationData) => el.id === data.city.id
+    );
+    const streetName = locationStreet.find(
+      (el: ILocationData) => el.id === data.street.id
+    );
+
+    let final: ILocation = {} as ILocation;
+    if (cityName && streetName && row) {
+      final = {
+        id: mode === "add" ? "" : row[0].id,
+        city: { id: data.city.id, name: cityName.name },
+        street: { id: data.street.id, name: streetName.name },
+        alias: data.alias,
+        floor: data.floor,
+        house: data.house,
+        room: data.room,
+      };
+    }
+    return final;
+  };
+
   const onSubmit = (data: any) => {
-    console.log("Submit form: ", data);
+    const res = revisionData(data);
+    if (mode === "add") {
+      handleInsertLocation(res);
+    } else if (mode === "edit") {
+      handleEditLocation(res);
+    }
     reset({
       city: {},
       street: {},
@@ -112,14 +149,9 @@ export const LocationForm = (props: Props) => {
         house: "",
         room: "",
       });
-      currentRow = {} as ILocation;
       handleClose();
     }
   };
-
-  console.log("errors: ", errors);
-  console.log("getValues(): ", getValues());
-  console.log("isValid: ", isValid);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
